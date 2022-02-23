@@ -1,33 +1,57 @@
 <template>
   <Layout>
+      <div class="jumbotron">
+        <div class="container">
+          <h1 class="display-3">Hi!</h1>
+          <p>This is a blog that document development process of my side project. Each post coresponds with a commit on github to make it easy to follow and let you understand every single step. Nevertheless if something looks difficult or unclear - feel free to ask! It's educational project so i'm always happy to help you :)</p>
+          <p>Let's have some fun and learn VUE + Firebase together!</p>
+          <p>If you want to play around with the project in current stage - visit interviewfrontend.com by clicking button below.</p>
+          <p><a class="btn btn-outline-primary btn-lg" href="https://interviewfrontend.com" role="button">Interview Frontend</a></p>
+        </div>
+      </div>
 
-    <!-- Learn how to use images here: https://gridsome.org/docs/images -->
-    <g-image alt="Example image" src="~/favicon.png" width="135" />
+      <div class="container">
+        <div class="row">
+          <div v-for="post in $page.posts.edges" :key="post.id" class="col-md-4">
+            <hr>
+            <h3>{{ post.node.title }}</h3>
+            <p class="date">{{ post.node.date }}</p>
+            <p>{{ post.node.summary }}</p>
+            <p><g-link class="btn btn-outline-secondary" :to="post.node.path" role="button">View details &raquo;</g-link></p>
+          </div>
+        </div>
 
-    <h1>Hello, world!</h1>
 
-    <p>
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur excepturi labore tempore expedita, et iste tenetur suscipit explicabo! Dolores, aperiam non officia eos quod asperiores
-    </p>
-
-    <p class="home-links">
-      <a href="https://gridsome.org/docs/" target="_blank" rel="noopener">Gridsome Docs</a>
-      <a href="https://github.com/gridsome/gridsome" target="_blank" rel="noopener">GitHub</a>
-    </p>
-
+      </div>
   </Layout>
 </template>
 
-<script>
-export default {
-  metaInfo: {
-    title: 'Hello, world!'
+<style scoped>
+  .jumbotron {
+    margin: 4rem 0;
   }
-}
-</script>
-
-<style>
-.home-links a {
-  margin-right: 1rem;
-}
 </style>
+
+<static-query>
+	query {
+		metadata {
+			siteName
+		}
+	}
+</static-query>
+
+<page-query>
+	query {
+		posts: allPost {
+			edges {
+				node {
+					id 
+					title 
+					path 
+          summary
+					date(format: "MMMM D, YYYY")
+				} 
+			} 
+		} 
+	}
+</page-query>
